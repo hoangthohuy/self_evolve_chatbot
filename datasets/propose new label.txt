@@ -1,0 +1,82 @@
+propose new label :
+
+refuse_to_buy
+
+ask_for_sale 
+
+ask_info
+
+old label in the json :
+
+place_order
+
+delivery_period
+
+list(set(ds1))
+
+
+training thử với epoch nhỏ hơn (ko có label cũ và có label cũ)	
+
+đánh giá :
+without_new_label_15_epochs : dogshit on dataset conversation :
+{'speaker': 'client', 'text': 'Thôi được, mình để lại số 0987654321 nhé. Nhưng mà chắc chắn khi nào có size S em phải nhắn tin cho mình đấy!', 'label': 'contact_human_agent'}
+{'speaker': 'client', 'text': 'Chào bạn, mình muốn mua chiếc điện thoại Samsung Galaxy S23 Ultra 5G, có hàng không vậy?', 'label': 'place_order'}
+{'speaker': 'client', 'text': 'Chào shop, mình thấy đôi giày thể thao Nike Air Max 90 đang khuyến mại 30% trên web. Còn size 42 không vậy?', 'label': 'switch_account'}
+{'speaker': 'client', 'text': 'Chào bạn, mình đang tìm mua chiếc bàn làm việc để bàn gỗ thông minh này. Nó có hỗ trợ điều chỉnh chiều cao không vậy?', 'label': 'switch_account'}
+{'speaker': 'client', 'text': 'Chào bot, mình muốn mua chiếc đồng hồ Casio G-Shock GA-2100-1A, giá bao nhiêu vậy?', 'label': 'place_order'}
+{'speaker': 'client', 'text': 'Ồ, giảm nhiều đấy! Mình lấy 1 chiếc. Ship tận nhà không? Mình ở quận 1.', 'label': 'place_order'}
+
+
+
+with_new_label_15_epochs : 
+take the last model (nhận thấy chỉ có loss(CrossEntropyLoss)
+{'test_en_loss': 0.13825595378875732,
+ 'test_en_accuracy@en': 0.9763440860215054,
+ 'test_en_f1@en': 0.9735239273690055,
+ 'test_en_precision@en': 0.9743556477921802,
+ 'test_en_recall@en': 0.9743604108309991,
+ 'test_en_loss@en': 0.13825593888759613,
+ 'test_en_runtime': 3.371,
+ 'test_en_samples_per_second': 137.942,
+ 'test_en_steps_per_second': 8.899,
+ 'epoch': 15.0}
+Epoch	Training Loss	Validation Loss	Accuracy@en	F1@en	Precision@en	Recall@en	Loss@en
+1	3.361230	3.129318	0.323276	0.257926	0.384588	0.317239	3.129318
+2	2.568374	1.834873	0.812500	0.797059	0.842277	0.827688	1.834873
+3	1.535363	1.102156	0.883621	0.864962	0.879228	0.893259	1.102156
+4	0.962631	0.706249	0.935345	0.922338	0.916965	0.937150	0.706249
+5	0.634401	0.475501	0.971983	0.971721	0.974050	0.972920	0.475501
+6	0.411454	0.331626	0.978448	0.979214	0.979529	0.981449	0.331626
+7	0.285261	0.249953	0.982759	0.982838	0.983060	0.984479	0.249953
+8	0.200421	0.208011	0.976293	0.977310	0.978292	0.979068	0.208011
+9	0.147742	0.191707	0.974138	0.976868	0.980284	0.976176	0.191707
+10	0.115357	0.165954	0.974138	0.975606	0.977411	0.977107	0.165954
+11	0.096812	0.161843	0.969828	0.972445	0.975070	0.972345	0.161843
+12	0.084864	0.154362	0.974138	0.975769	0.977697	0.976687	0.154362
+13	0.075364	0.154449	0.974138	0.975606	0.977411	0.977107	0.154449
+14	0.071073	0.150737	0.971983	0.973300	0.974863	0.974726	0.150737
+15	0.068718	0.149895	0.974138	0.975684	0.977085	0.977107	0.149895
+
+
+re train: 
+Epoch	Training Loss	Validation Loss	Accuracy@en	F1@en	Precision@en	Recall@en	Loss@en
+1	3.169362	2.530598	0.659483	0.587794	0.662427	0.647719	2.530598
+2	2.021701	1.396668	0.894397	0.876031	0.876169	0.890679	1.396668
+3	1.190449	0.828917	0.924569	0.907662	0.905862	0.919068	0.828917
+4	0.739358	0.546578	0.956897	0.951042	0.959857	0.954306	0.546578
+5	0.483712	0.376048	0.974138	0.974220	0.976394	0.975085	0.376048
+6	0.318443	0.269471	0.976293	0.976539	0.977289	0.978536	0.269471
+7	0.209412	0.200063	0.980603	0.982658	0.984468	0.982315	0.200063
+8	0.150847	0.176169	0.976293	0.978382	0.980283	0.978419	0.176169
+9	0.115967	0.160608	0.976293	0.979451	0.982044	0.979284	0.160608
+10	0.093921	0.136647	0.980603	0.982281	0.983483	0.982315	0.136647
+11	0.081613	0.143923	0.976293	0.979451	0.982044	0.979284	0.143923
+12	0.072605	0.128661	0.980603	0.982658	0.984468	0.982315	0.128661
+13	0.066539	0.124538	0.980603	0.982658	0.984468	0.982315	0.124538
+14	0.062396	0.124237	0.980603	0.982658	0.984468	0.982315	0.124237
+15	0.061183	0.124599	0.980603	0.982658	0.984468	0.982315	0.124599
+
+
+sẽ đánh giá sau chất lượng của từng model bằng clustering
+
+
